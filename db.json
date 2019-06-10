@@ -1,0 +1,117 @@
+{
+  "contacts": [
+    {
+      "id": "01",
+      "name": "Homer Simpson",
+      "phone": "+1-378-234-999",
+      "email": "homer@gmail.com",
+      "historyid": "001"
+    },
+    {
+      "id": "02",
+      "name": "Marge Simpson",
+      "phone": "+1-568-855-999",
+      "email": "marge@gmail.com",
+      "historyid": "002"
+    },
+    {
+      "id": "03",
+      "name": "Bart Simpson",
+      "phone": "+1-378-234-516",
+      "email": "bart@gmail.com"
+    },
+    {
+      "id": "05",
+      "name": "Maggie Simpson",
+      "phone": "+1-378-276-481",
+      "email": "maggie@gmail.com"
+    },
+    {
+      "id": "06",
+      "name": "Ned Flanders",
+      "phone": "+1-234-368-145",
+      "email": "ned@gmail.com"
+    },
+    {
+      "id": "07",
+      "name": "Montgomery Burns",
+      "phone": "+1-765-780-034",
+      "email": "montgomery@gmail.com"
+    },
+    {
+      "id": "08",
+      "name": "Seymour Skinner",
+      "phone": "+1-345-567-255",
+      "email": "seymour@gmail.com"
+    },
+    {
+      "id": "09",
+      "name": "Barney Gumble",
+      "phone": "+1-691-385-496",
+      "email": "barney@gmail.com"
+    },
+    {
+      "id": "10",
+      "name": "Apu Nahasapeemapetilon",
+      "phone": "+1-156-185-347",
+      "email": "apu@gmail.com"
+    }
+  ],
+  "history": [
+    {
+      "id": "001",
+      "calls": [
+        {
+          "id": "0001",
+          "to": "02",
+          "time": "12:07"
+        },
+        {
+          "id": "0002",
+          "to": "03",
+          "time": "12:03"
+        },
+        {
+          "id": "0003",
+          "to": "02",
+          "time": "12:01"
+        },
+        {
+          "id": "0004",
+          "to": "03",
+          "time": "11:49"
+        },
+        {
+          "id": "0005",
+          "to": "06",
+          "time": "11:07"
+        }
+      ]
+    },
+    {
+      "id": "002",
+      "calls": [
+        {
+          "id": "0001",
+          "to": "01",
+          "time": "15:07"
+        },
+        {
+          "id": "0002",
+          "to": "03",
+          "time": "15:03"
+        },
+        {
+          "id": "0003",
+          "to": "05",
+          "time": "14:50"
+        },
+        {
+          "id": "0004",
+          "to": "06",
+          "time": "14:40"
+        }
+      ]
+    }
+  ]
+}
