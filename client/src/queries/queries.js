@@ -79,8 +79,8 @@ query ($id: String!) {
 `;
 
 export const fetchContacts = gqt`
-    {
-        contacts {
+    query Contacts ($limit: Int, $first: Int){
+        contacts (limit: $limit, first: $first) {
             id
             name
             phone

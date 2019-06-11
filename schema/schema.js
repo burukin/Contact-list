@@ -9,7 +9,8 @@ const {
     GraphQLString,
     GraphQLSchema,
     GraphQLList,
-    GraphQLNonNull
+    GraphQLNonNull,
+    GraphQLInt
 } = graphQL;
 
 const CallType = new GraphQLObjectType({
@@ -65,8 +66,13 @@ const RootQuery = new GraphQLObjectType({
         },
         contacts: {
             type: new GraphQLList(ContactType),
-            resolve() {
-                return axios.get(`http://localhost:5000/contacts`).then(res=>res.data);
+            args: {
+                first: {type: GraphQLInt},
+                limit: {type: GraphQLInt}
+            },
+            resolve(parentValue, {first=5, limit=0}) {
+                return axios.get(`http://localhost:5000/contacts`)
+                    .then(res=> res.data.slice(limit, first));
             }
         },
         history: {
