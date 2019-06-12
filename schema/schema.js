@@ -10,7 +10,8 @@ const {
     GraphQLSchema,
     GraphQLList,
     GraphQLNonNull,
-    GraphQLInt
+    GraphQLInt,
+    GraphQLBoolean
 } = graphQL;
 
 const CallType = new GraphQLObjectType({
@@ -53,6 +54,39 @@ const ContactType = new GraphQLObjectType({
     })
 });
 
+const ContactsType = new GraphQLObjectType({
+    name: 'Contacts',
+    fields: () => ({
+        totalCount: {
+            type: GraphQLInt,
+            resolve(parentValue, args) {
+                return parentValue.totalCount;
+            }
+        },
+        edges: {
+            type: new GraphQLList(ContactType),
+            resolve(parentValue, args) {
+                return parentValue.users;
+            }
+        },
+        pageInfo: {
+            type: PageInfo,
+            resolve ({users, lastId}, args) {
+                const lastUsersId = users[users.length-1].id;
+                return {hasNextPage: lastUsersId !== lastId};
+            }
+        }
+
+    })
+});
+
+const PageInfo = new GraphQLObjectType ({
+    name: 'pageInfo',
+    fields: () => ({
+        hasNextPage: {type: GraphQLBoolean}
+    })
+});
+
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
@@ -65,14 +99,16 @@ const RootQuery = new GraphQLObjectType({
             }
         },
         contacts: {
-            type: new GraphQLList(ContactType),
+            type: ContactsType,
             args: {
                 first: {type: GraphQLInt},
-                limit: {type: GraphQLInt}
+                last: {type: GraphQLInt}
             },
-            resolve(parentValue, {first=5, limit=0}) {
+            resolve(parentValue, args) {
                 return axios.get(`http://localhost:5000/contacts`)
-                    .then(res=> res.data.slice(limit, first));
+                    .then(({data}) => {
+                        return {users: data.slice(args.first, args.last), totalCount: data.length, lastId: data[data.length-1].id};
+                    })
             }
         },
         history: {

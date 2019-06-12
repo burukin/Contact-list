@@ -79,12 +79,18 @@ query ($id: String!) {
 `;
 
 export const fetchContacts = gqt`
-    query Contacts ($limit: Int, $first: Int){
-        contacts (limit: $limit, first: $first) {
-            id
-            name
-            phone
-            email
-        }
+    query Contacts ($first: Int, $last: Int){
+    contacts (first: $first, last: $last){
+  		totalCount
+      edges {
+        id
+        name
+        phone
+        email
+      }
+      pageInfo{
+        hasNextPage
+      }
     }
+  }
 `;

@@ -11,10 +11,12 @@ import ContactItem from './ContactItem';
 import ContactForm from './ContactForm';
 import NavBar from '../navbar/NavBar';
 
+const _CONTACTS_PER_PAGE = 5;
+
 const Contacts = ({contact:{contacts, loading}, fetchContactsAction}) => {
 
     useEffect( () => {
-        fetchContactsAction(0, 5);
+        fetchContactsAction(0, _CONTACTS_PER_PAGE);
     }, [fetchContactsAction]);
 
     const [toggleCreateForm, setToggleCreateForm] = useState(false);
@@ -25,9 +27,8 @@ const Contacts = ({contact:{contacts, loading}, fetchContactsAction}) => {
 
     const handlePageClick = data => {
         let selected = data.selected;
-        let limit = Math.ceil(selected * 5);
-        console.log(limit);
-        fetchContactsAction(limit, 5*(selected+1));
+        let first = Math.ceil((selected) * _CONTACTS_PER_PAGE);
+        fetchContactsAction(first, first + _CONTACTS_PER_PAGE);
     };
 
     return (
@@ -35,7 +36,7 @@ const Contacts = ({contact:{contacts, loading}, fetchContactsAction}) => {
             <NavBar toggleCreateForm={onToggleCreateForm}/>
             {toggleCreateForm && <ContactForm />}
             {loading ? <p>Loading</p>: (
-                contacts.map(contact => {
+                contacts.edges.map(contact => {
                     return <ContactItem key={contact.id} contact={contact}/>
                 })
             )}
@@ -45,7 +46,7 @@ const Contacts = ({contact:{contacts, loading}, fetchContactsAction}) => {
                     nextLabel={'next'}
                     breakLabel={'...'}
                     breakClassName={'break-me'}
-                    pageCount={3}
+                    pageCount={Math.ceil(contacts.totalCount / _CONTACTS_PER_PAGE)}
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={5}
                     onPageChange={handlePageClick}

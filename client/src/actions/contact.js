@@ -54,13 +54,13 @@ export const fetchCallHistoryAction = id => async dispatch => {
     }
 };
 
-export const fetchContactsAction = (limit, first) => async dispatch => {
+export const fetchContactsAction = (first=0, last) => async dispatch => {
     try {
         const request = await client.query({
             query: fetchContacts,
             variables: {
-                limit,
-                first
+                first,
+                last
             }
         });
         const response = await request;
